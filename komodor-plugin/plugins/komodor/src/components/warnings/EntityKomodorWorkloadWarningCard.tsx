@@ -13,8 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { createRouteRef } from '@backstage/core-plugin-api';
 
-export const rootRouteRef = createRouteRef({
-  id: 'komodor',
-});
+import React from 'react';
+import { Alert } from '@material-ui/lab';
+import { Box } from '@material-ui/core';
+
+export interface WarningCardProps {
+  title: string;
+  message: string;
+}
+
+/**
+ * A generic alert
+ * @returns
+ */
+export function EntityKomodorWorkloadWarningCard({
+  title,
+  message,
+}: WarningCardProps) {
+  return (
+    <Box mb={1}>
+      <Alert severity="warning">
+        <div>{title}</div>
+        <div>{message}</div>
+      </Alert>
+    </Box>
+  );
+}

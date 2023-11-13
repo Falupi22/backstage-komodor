@@ -13,8 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { createRouteRef } from '@backstage/core-plugin-api';
 
-export const rootRouteRef = createRouteRef({
-  id: 'komodor',
-});
+export enum WorkloadStatus {
+  Healthy = 'Healthy',
+  Unhealthy = 'Unhealthy',
+}
+
+export interface WorkloadDetailsRequestInfo {
+  workload_name: string;
+  workload_namespace: string;
+  workload_uuid?: string;
+}
+
+export interface WorkloadInstanceInfo {
+  cluster_name: string;
+  status: string;
+  workload_uuid: string;
+}

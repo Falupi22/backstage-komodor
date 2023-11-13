@@ -13,8 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { createRouteRef } from '@backstage/core-plugin-api';
 
-export const rootRouteRef = createRouteRef({
-  id: 'komodor',
-});
+/**
+ * Fetches data, throws if the given timeout reached.
+ * @param resource URL to use for the fetch.
+ * @param timeout
+ * @param options Additional headers
+ * @returns
+ */
+export const fetchWithTimeout = async (
+  resource: string,
+  timeout: number,
+  options = {},
+) => {
+  try {
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeout);
+
+    const response = await fetch(resource, {
+      ...options,
+      signal: controller.signal,
+    });
+
+    clearTimeout(id);
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};

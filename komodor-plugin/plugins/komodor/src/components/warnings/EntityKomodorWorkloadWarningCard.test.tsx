@@ -13,8 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { createRouteRef } from '@backstage/core-plugin-api';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import { EntityKomodorWorkloadWarningCard } from './EntityKomodorWorkloadWarningCard';
 
-export const rootRouteRef = createRouteRef({
-  id: 'komodor',
+describe('Show alert', () => {
+  it('renders the user table', async () => {
+    render(<EntityKomodorWorkloadWarningCard title="mock" message="message" />);
+
+    // Wait for the table to render
+    const table = await screen.findByRole('alert');
+
+    // Assert that the table contains the expected user data
+    expect(table).toBeInTheDocument();
+  });
 });
