@@ -19,7 +19,7 @@ import { KomodorApiRequestInfo, KomodorApiResponseInfo } from '../types/types';
 import { KomodorApi } from './komodorApi';
 import { CacheOptions, Workload, WorkloadCache } from './workloadCache';
 
-const POLLING_INTERVAL = 5000;
+const POLLING_INTERVAL = 8000;
 const CONSIDER_IRRELEVANT_DATA_INTERVAL = 30000;
 const KOMODOR_ERROR =
   'An error occurred while fetching the data from Komodor service.';
