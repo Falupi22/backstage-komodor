@@ -14,7 +14,7 @@ metadata:
     komodor.io/workload-namespace: my_workload_namespace1A
     # K8s clusters to fetch data from
     # Should be explicilty configured in the app-config.yaml K8s section (see K8s docs).
-    komodor.io/clusters: 'local, cluster_a'
+    # komodor.io/clusters: 'local, cluster_a'
     # (Optional) Custom workload UIDs. Added to UIDs fetched from the clusters (if any)
     # komodor.io/custom-uids: 'uuid_podA, uuid_pod_b'
 spec:
