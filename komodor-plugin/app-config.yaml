@@ -92,6 +92,9 @@ catalog:
       rules:
         - allow: [User, Group]
 
+    - type: file
+      target: ../../plugins/komodor-backend/examples/komodor-mock.yaml
+
     ## Uncomment these lines to add more example data
     # - type: url
     #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all.yaml
