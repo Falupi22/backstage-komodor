@@ -87,7 +87,7 @@ app.get('/workload', (req, res) => {
   res.status(status).json(responseJSON);
 });
 
-app.get('*', (req, res) => {
+app.get('*', (_req, res) => {
   res.status(404).json({ message: 'Not Found' });
 });
 
