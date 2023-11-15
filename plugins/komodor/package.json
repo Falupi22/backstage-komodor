@@ -1,6 +1,6 @@
 {
-  "name": "@backstage/plugin-komodor",
-  "version": "0.0.0",
+  "name": "@falupi22/plugin-komodor",
+  "version": "1.0.0-gamma",
   "main": "src/index.ts",
   "types": "src/index.ts",
   "license": "Apache-2.0",
@@ -52,5 +52,8 @@
     "dist",
     "config.d.ts"
   ],
-  "configSchema": "config.d.ts"
+  "configSchema": "config.d.ts",
+  "description": "Frontend Komodor intergration for Backstage",
+  "repository": "https://github.com/Falupi22/backstage-komodor",
+  "author": "Tal Frumkin"
 }
