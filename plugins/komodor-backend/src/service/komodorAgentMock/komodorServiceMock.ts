@@ -41,7 +41,7 @@ cache.set('ef9a01d9-2854-4bfd-959e-91427afbadf6', {
   workloadName: 'my_workload_name1A',
   workloadNamespace: 'my_workload_namespace1A',
   clusterName: 'local',
-  status: 'Healthy',
+  status: 'Unhealthy',
   workloadUUID: 'ef9a01d9-2854-4bfd-959e-91427afbadf6',
 });
 
