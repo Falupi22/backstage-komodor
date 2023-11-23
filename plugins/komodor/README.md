@@ -1,6 +1,6 @@
 # Komodor Plugin
 
-<img src="./plugins/komodor/src/assets/screenshot_normal.png">
+<img src="./src/assets/screenshot_normal.png">
 
 ## Setup
 
