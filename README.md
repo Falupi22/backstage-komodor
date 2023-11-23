@@ -1,4 +1,4 @@
-# komodor Plugin
+# Komodor Plugin
 
 <img src="./plugins/komodor/src/assets/screenshot_normal.png">
 
@@ -8,8 +8,10 @@
 
 ```bash
 # From your Backstage root directory
-yarn --cwd packages/app add @backstage/plugin-komodor
-yarn --cwd packages/backend add @backstage/plugin-komodor-backend
+yarn --cwd packages/app add @falupi22/plugin-komodor
+yarn --cwd packages/backend add @falupi22/plugin-komodor-backend
+yarn --cwd packages/app add @backstage/plugin-kubernetes
+yarn --cwd packages/backend add @backstage/plugin-kubernetes-backend
 ```
 
 2. Add the plugin backend:
@@ -57,6 +59,7 @@ const serviceEntityPage = (
       <EntityKomodorContent />
     </EntityLayout.Route>
 ```
+4. Follow the instructions for [kubernetes plugin setup](https://backstage.io/docs/features/kubernetes/installation) (notice that the installation of it has already been done).
 
 4. Follow the backend instructions which can be found in the README file of the backend project.
 
@@ -64,3 +67,5 @@ const serviceEntityPage = (
 
 In order to run the full system, run `yarn dev` from the root directory.
 In order to run the front end only, run `yarn start`.
+In order to run the back end only, run `yarn start-backend`.
+
