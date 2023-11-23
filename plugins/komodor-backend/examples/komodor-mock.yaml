@@ -6,16 +6,16 @@ metadata:
   description: Mock for testing Komodor
   annotations:
     # 'backstage.io/kubernetes-id': your-item (see K8s docs)
-    # Mandatory for displaying the tab in the entity. Any non empty/whitespace value
+    # komodor.io/komodor-entity-id: mandatory for displaying the tab in the entity. Any non empty/whitespace value
     # is welcomed.
     komodor.io/komodor-entity-id: my_id
-    # If not set, fetches by UUIDs. If set, only both! 
+    # If these two are not set, the plugin fetches data by UUIDs (from clusters or custom). If set, both the namespace and the name should be! 
     komodor.io/workload-name: my_workload_name1A
     komodor.io/workload-namespace: my_workload_namespace1A
-    # K8s clusters to fetch data from
-    # Should be explicilty configured in the app-config.yaml K8s section (see K8s docs).
+    # komodor.io/clusters: represents the names of the K8s clusters to fetch data from.
+    # and should be explicilty configured in the app-config.yaml K8s section (see K8s docs).
     # komodor.io/clusters: 'local, cluster_a'
-    # (Optional) Custom workload UIDs. Added to UIDs fetched from the clusters (if any)
+    # (Optional) komodor.io/custom-uids: custom workload UIDs. Added to UIDs fetched from the clusters (if any).
     # komodor.io/custom-uids: 'uuid_podA, uuid_pod_b'
 spec:
   type: website
