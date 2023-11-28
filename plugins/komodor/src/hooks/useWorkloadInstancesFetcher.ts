@@ -63,9 +63,22 @@ export const useWorkloadFilter = (
             clusterName: cluster,
             path: KUBERNETES_WORKLOAD_PATH,
           });
+
           const items = (await response.json()).items;
+          const replicaSetsUIDs: Array<string> = [];
+
+          // Stores all the pods, if there's more than one pod within a ReplicasSet
+          // takes only the first pod's UUID.
           items.forEach(item => {
-            uuids.push(item.metadata.uid);
+            const replicaUID: string | undefined = item.metadata.ownerReferences?.at(0)?.uid;
+            if (replicaUID) {
+            if (!(replicaUID in replicaSetsUIDs)) {
+              replicaSetsUIDs.push(replicaUID);
+              uuids.push(item.metadata.uid);
+            }}
+            else {
+              uuids.push(item.metadata.uid);
+            }
           });
         } catch (error) {
           break;
