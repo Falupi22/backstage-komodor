@@ -119,6 +119,7 @@ export class KomodorWorker {
           );
         }
       }
+      console.log("Reg: " + JSON.stringify(params))
       // Fetches the data right from Komodor or at least from the cache, after formatting it
       data =
         shouldFetch && existingData && existingData.length > 0
@@ -133,26 +134,50 @@ export class KomodorWorker {
 
       // Why not updating the cache with some fresh data ;)?
       if (shouldFetch) {
-        data.forEach(workload => {
-          const item = this.cache.getWorkloadByUUID(workload.workload_uuid);
+        // Cache cannot store items without pod UUID because it's the only way to get the workload.
+        if (params.pod_uuid) {
+          // There's only one workload with this UUID.
+          const item = this.cache.getWorkloadByUUID(params.pod_uuid);
 
           if (item) {
-            item.clusterName = workload.cluster_name;
-            item.status = workload.status;
+            item.clusterName = data[0].cluster_name;
+            item.status = data[0].status;
 
             this.cache.setWorkload(item);
           } else {
             this.cache.setWorkload({
-              uuid: workload.workload_uuid,
-              pod_uuid: params.pod_uuid,
+              uuid: params.pod_uuid,
               name: params.workload_name,
               namespace: params.workload_namespace,
-              clusterName: workload.cluster_name,
-              status: workload.status,
+              clusterName: data[0].cluster_name,
+              status: data[0].status,
               lastUpdateRequest: Date.now(),
             });
+
+            // In case where there is pod UUID, the data contains only one item.
+            const workload = data.at(0);
+            if (workload) {
+              const item = this.cache.getWorkloadByUUID(workload.workload_uuid);
+    
+              if (item) {
+                item.clusterName = workload.cluster_name;
+                item.status = workload.status;
+    
+                this.cache.setWorkload(item);
+              } else {
+                this.cache.setWorkload({
+                  uuid: workload.workload_uuid,
+                  pod_uuid: params.pod_uuid,
+                  name: params.workload_name,
+                  namespace: params.workload_namespace,
+                  clusterName: workload.cluster_name,
+                  status: workload.status,
+                  lastUpdateRequest: Date.now(),
+                });
+              }
+            };
           }
-        });
+        }
       }
     } catch (error) {
       if (error instanceof ResponseError) {
@@ -196,11 +221,15 @@ export class KomodorWorker {
               this.cache.removeWorkload(workload.uuid);
             }
 
-            if (workload.pod_uuid) {
+            console.log("Upd:", {
+              workload_name: workload.name,
+              workload_namespace: workload.namespace,
+              pod_uuid: workload.pod_uuid
+            });
               const data: KomodorApiResponseInfo[] = await this.api.fetch({
-                pod_uuid: workload.pod_uuid,
                 workload_name: workload.name,
                 workload_namespace: workload.namespace,
+                pod_uuid: workload.pod_uuid
               });
 
             const updatedWorkload: Workload | undefined = data
@@ -220,7 +249,6 @@ export class KomodorWorker {
             if (updatedWorkload) {
               this.cache.setWorkload(updatedWorkload, false);
             }
-          }
           } catch (error) {
             result = false;
           }
