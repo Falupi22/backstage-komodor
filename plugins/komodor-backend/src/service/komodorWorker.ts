@@ -207,7 +207,7 @@ export class KomodorWorker {
                   namespace: workload.namespace,
                   clusterName: response.cluster_name,
                   status: response.status,
-                  lastUpdateRequest: Date.now(),
+                  lastUpdateRequest: workload.lastUpdateRequest,
                 };
               })
               .at(0);

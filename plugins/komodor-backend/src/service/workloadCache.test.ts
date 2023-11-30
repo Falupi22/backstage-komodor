@@ -156,7 +156,6 @@ describe('WorkloadCache', () => {
       status: 'Unhealthy',
       lastUpdateRequest: Date.now(),
     };
-
     workloadCache.setWorkload(firstWorkload);
     workloadCache.setWorkload(secondWorkload);
 
