@@ -16,7 +16,7 @@
 
 const express = require('express');
 
-const DEFAULT_VALUE: string = '!default!';
+const DEFAULT_VALUE = '!default!';
 
 const app = express();
 const port = 7008;
