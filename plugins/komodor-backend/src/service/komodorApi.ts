@@ -81,11 +81,7 @@ export class KomodorApi
         ...this.options,
       };
 
-      const queryParams = new URLSearchParams({
-        workload_name: params.workload_name,
-        workload_namespace: params.workload_namespace,
-        workload_uuid: params?.workload_uuid ?? '',
-      });
+      const queryParams = new URLSearchParams(Object.entries(params));
 
       const path = `${KOMODOR_API}?${queryParams.toString()}`; // Convert URLSearchParams to a string
       const fetchURL = new URL(path, this.url);

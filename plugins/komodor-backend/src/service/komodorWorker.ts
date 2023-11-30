@@ -92,8 +92,11 @@ export class KomodorWorker {
         workload_namespace:
           queryParams.get(API_QUERY_PARAMS_WORKLOAD_NAMESPACE) ??
           API_QUERY_PARAMS_DEFAULT_VALUE,
-        pod_uuid: queryParams.get(API_QUERY_PARAMS_WORKLOAD_UUID) ?? '',
       };
+
+      if (queryParams.has(API_QUERY_PARAMS_WORKLOAD_UUID)) {
+        queryParams.append(API_QUERY_PARAMS_WORKLOAD_UUID, queryParams.get(API_QUERY_PARAMS_WORKLOAD_UUID) ?? '')
+      }
 
       const { shouldFetch } = cacheOptions;
 
@@ -101,8 +104,9 @@ export class KomodorWorker {
       let existingData: Workload[] | undefined;
 
       if (shouldFetch) {
-        if (params.pod_uuid && queryParams.has(params.pod_uuid)) {
-          const workload = this.cache.getWorkloadByUUID(params?.pod_uuid);
+        if (params.pod_uuid) {
+          const workload = this.cache.getWorkloads(workload =>
+            workload.pod_uuid === params.pod_uuid).at(0);
 
           if (workload) {
             existingData = [workload];
@@ -140,7 +144,7 @@ export class KomodorWorker {
           } else {
             this.cache.setWorkload({
               uuid: workload.workload_uuid,
-              pod_uuid: params.pod_uuid ?? '',
+              pod_uuid: params.pod_uuid,
               name: params.workload_name,
               namespace: params.workload_namespace,
               clusterName: workload.cluster_name,
@@ -192,17 +196,18 @@ export class KomodorWorker {
               this.cache.removeWorkload(workload.uuid);
             }
 
-            const data: KomodorApiResponseInfo[] = await this.api.fetch({
-              pod_uuid: workload.uuid,
-              workload_name: workload.name,
-              workload_namespace: workload.namespace,
-            });
+            if (workload.pod_uuid) {
+              const data: KomodorApiResponseInfo[] = await this.api.fetch({
+                pod_uuid: workload.pod_uuid,
+                workload_name: workload.name,
+                workload_namespace: workload.namespace,
+              });
 
             const updatedWorkload: Workload | undefined = data
               .map(function (response) {
                 return {
                   uuid: workload.uuid,
-                  pod_uuid: workload.pod_uuid ?? '',
+                  pod_uuid: workload.pod_uuid,
                   name: workload.name,
                   namespace: workload.namespace,
                   clusterName: response.cluster_name,
@@ -215,10 +220,9 @@ export class KomodorWorker {
             if (updatedWorkload) {
               this.cache.setWorkload(updatedWorkload, false);
             }
+          }
           } catch (error) {
             result = false;
-
-            throw error;
           }
 
           return result;
