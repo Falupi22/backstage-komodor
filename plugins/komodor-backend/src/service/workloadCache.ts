@@ -16,6 +16,8 @@
 
 export interface Workload {
   uuid: string;
+  // The way to get the workload UUID.
+  pod_uuid: string,
   name: string;
   namespace: string;
   clusterName: string;

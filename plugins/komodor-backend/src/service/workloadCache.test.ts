@@ -48,6 +48,7 @@ describe('WorkloadCache', () => {
   it('should set data item in cache', () => {
     const workload: Workload = {
       uuid: 'uuid2',
+      pod_uuid: 'p_uuid2',
       name: 'name2',
       namespace: 'namespace2',
       clusterName: 'cname2',
@@ -65,6 +66,7 @@ describe('WorkloadCache', () => {
   it('should return workloads by name and namespace if exist', () => {
     const firstWorkload: Workload = {
       uuid: 'uuid1',
+      pod_uuid: 'p_uuid1',
       name: 'name1',
       namespace: 'namespace1',
       clusterName: 'cname1',
@@ -74,6 +76,7 @@ describe('WorkloadCache', () => {
 
     const secondWorkload: Workload = {
       uuid: 'uuid2',
+      pod_uuid: 'p_uuid1',
       name: 'name1',
       namespace: 'namespace1',
       clusterName: 'cname2',
@@ -97,6 +100,7 @@ describe('WorkloadCache', () => {
   it('should return workload by UUID if it exists', () => {
     const workload: Workload = {
       uuid: 'uuid1',
+      pod_uuid: 'p_uuid1',
       name: 'name1',
       namespace: 'namespace1',
       clusterName: 'cname1',
@@ -113,6 +117,7 @@ describe('WorkloadCache', () => {
   it('should remove data item from cache', () => {
     const workload: Workload = {
       uuid: 'uuid1',
+      pod_uuid: 'p_uuid1',
       name: 'name1',
       namespace: 'namespace1',
       clusterName: 'cname1',
@@ -134,6 +139,7 @@ describe('WorkloadCache', () => {
   it('should iterate over all items in the cache', async () => {
     const firstWorkload: Workload = {
       uuid: 'uuid1',
+      pod_uuid: 'p_uuid1',
       name: 'name1',
       namespace: 'namespace1',
       clusterName: 'cname1',
@@ -143,6 +149,7 @@ describe('WorkloadCache', () => {
 
     const secondWorkload: Workload = {
       uuid: 'uuid2',
+      pod_uuid: 'p_uuid1',
       name: 'name1',
       namespace: 'namespace1',
       clusterName: 'cname2',

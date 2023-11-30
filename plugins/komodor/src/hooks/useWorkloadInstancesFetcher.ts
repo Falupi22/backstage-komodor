@@ -131,7 +131,7 @@ export const useWorkloadInstancesFetcher = (
             ...(await api.getWorkloadInstances({
               workload_name: API_QUERY_PARAM_DEFAULT_VALUE,
               workload_namespace: API_QUERY_PARAM_DEFAULT_VALUE,
-              workload_uuid: uuid,
+              pod_uuid: uuid,
             })),
           );
         }
@@ -142,7 +142,7 @@ export const useWorkloadInstancesFetcher = (
           ...(await api.getWorkloadInstances({
             workload_name: filter.name,
             workload_namespace: filter.namespace,
-            workload_uuid: API_QUERY_PARAM_DEFAULT_VALUE,
+            pod_uuid: API_QUERY_PARAM_DEFAULT_VALUE,
           })),
         );
       }

@@ -22,7 +22,7 @@ export enum WorkloadStatus {
 export interface WorkloadDetailsRequestInfo {
   workload_name: string;
   workload_namespace: string;
-  workload_uuid?: string;
+  pod_uuid?: string;
 }
 
 export interface WorkloadInstanceInfo {

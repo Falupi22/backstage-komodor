@@ -18,7 +18,7 @@
  * A base class for KomodorApi requests.
  */
 export interface KomodorApiRequestInfoBase {
-  workload_uuid?: string;
+  pod_uuid?: string;
   options?: {};
 }
 

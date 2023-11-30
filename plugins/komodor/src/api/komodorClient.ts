@@ -24,6 +24,7 @@ import {
 
 const PLUGIN_ID: string = 'komodor';
 const PATH: string = 'workload';
+const DEFAULT_VALUE = '!default!';
 
 export class KomodorClient implements KomodorApi {
   private readonly discoveryApi: DiscoveryApi;
@@ -47,12 +48,12 @@ export class KomodorClient implements KomodorApi {
     info: WorkloadDetailsRequestInfo,
   ): Promise<WorkloadInstanceInfo[]> {
     try {
-      const { workload_name, workload_namespace, workload_uuid } = info;
+      const { workload_name, workload_namespace, pod_uuid } = info;
 
       const path: URLSearchParams = new URLSearchParams({
-        workload_name: workload_name ?? 'default',
-        workload_namespace: workload_namespace ?? 'default',
-        workload_uuid: workload_uuid ?? '',
+        workload_name: workload_name ?? DEFAULT_VALUE,
+        workload_namespace: workload_namespace ?? DEFAULT_VALUE,
+        pod_uuid: pod_uuid ?? '',
       });
 
       const items = await this.get<any>(

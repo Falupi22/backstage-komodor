@@ -25,7 +25,9 @@ const KOMODOR_ERROR =
   'An error occurred while fetching the data from Komodor service.';
 const API_QUERY_PARAMS_WORKLOAD_NAME = 'workload_name';
 const API_QUERY_PARAMS_WORKLOAD_NAMESPACE = 'workload_namespace';
-const API_QUERY_PARAMS_WORKLOAD_UUID = 'workload_uuid';
+
+// Using pod's UUID to achieve the whole workload.
+const API_QUERY_PARAMS_WORKLOAD_UUID = 'pod_uuid';
 const API_QUERY_PARAMS_DEFAULT_VALUE = 'default';
 
 export interface KomodorWorkerInfo {
@@ -90,7 +92,7 @@ export class KomodorWorker {
         workload_namespace:
           queryParams.get(API_QUERY_PARAMS_WORKLOAD_NAMESPACE) ??
           API_QUERY_PARAMS_DEFAULT_VALUE,
-        workload_uuid: queryParams.get(API_QUERY_PARAMS_WORKLOAD_UUID) ?? '',
+        pod_uuid: queryParams.get(API_QUERY_PARAMS_WORKLOAD_UUID) ?? '',
       };
 
       const { shouldFetch } = cacheOptions;
@@ -99,8 +101,8 @@ export class KomodorWorker {
       let existingData: Workload[] | undefined;
 
       if (shouldFetch) {
-        if (params.workload_uuid && queryParams.has(params.workload_uuid)) {
-          const workload = this.cache.getWorkloadByUUID(params?.workload_uuid);
+        if (params.pod_uuid && queryParams.has(params.pod_uuid)) {
+          const workload = this.cache.getWorkloadByUUID(params?.pod_uuid);
 
           if (workload) {
             existingData = [workload];
@@ -138,6 +140,7 @@ export class KomodorWorker {
           } else {
             this.cache.setWorkload({
               uuid: workload.workload_uuid,
+              pod_uuid: params.pod_uuid ?? '',
               name: params.workload_name,
               namespace: params.workload_namespace,
               clusterName: workload.cluster_name,
@@ -190,7 +193,7 @@ export class KomodorWorker {
             }
 
             const data: KomodorApiResponseInfo[] = await this.api.fetch({
-              workload_uuid: workload.uuid,
+              pod_uuid: workload.uuid,
               workload_name: workload.name,
               workload_namespace: workload.namespace,
             });
@@ -199,6 +202,7 @@ export class KomodorWorker {
               .map(function (response) {
                 return {
                   uuid: workload.uuid,
+                  pod_uuid: workload.pod_uuid ?? '',
                   name: workload.name,
                   namespace: workload.namespace,
                   clusterName: response.cluster_name,

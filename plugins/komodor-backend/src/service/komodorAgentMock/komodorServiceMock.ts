@@ -16,6 +16,8 @@
 
 const express = require('express');
 
+const DEFAULT_VALUE: string = '!default!';
+
 const app = express();
 const port = 7008;
 
@@ -47,20 +49,20 @@ cache.set('ef9a01d9-2854-4bfd-959e-91427afbadf6', {
 
 app.get('/workload', (req, res) => {
   const {
-    workload_name = '!default!',
-    workload_namespace = '!default!',
-    workload_uuid = '!default!',
+    workload_name = DEFAULT_VALUE,
+    workload_namespace = DEFAULT_VALUE,
+    pod_uuid = DEFAULT_VALUE,
   } = req.query;
   console.log(req.query);
-  const dataPerUUID = cache.get(workload_uuid);
+  const dataPerUUID = cache.get(pod_uuid);
   let requestedData;
 
   if (
     dataPerUUID &&
-    workload_name === '!default!' &&
-    workload_namespace === '!default!'
+    workload_name === DEFAULT_VALUE &&
+    workload_namespace === DEFAULT_VALUE
   ) {
-    if (workload_uuid !== '!default!') {
+    if (pod_uuid !== DEFAULT_VALUE) {
       // No need to filter as there's only one workload with this UUID.
       requestedData = [dataPerUUID];
     }
