@@ -15,9 +15,9 @@ metadata:
     # komodor.io/clusters: represents the names of the K8s clusters to fetch data from.
     # and should be explicilty configured in the app-config.yaml K8s section (see K8s docs).
     # komodor.io/clusters: 'local, cluster_a'
-    # (Optional) komodor.io/custom-uids: custom workload UIDs. Added to UIDs fetched from the clusters (if any).
+    # (Optional) komodor.io/custom-uids: custom pods UIDs. Added to UIDs fetched from the clusters (if any).
     # komodor.io/custom-uids: 'uuid_podA, uuid_pod_b'
 spec:
-  type: website
+  type: service
   lifecycle: experimental
   owner: guests
