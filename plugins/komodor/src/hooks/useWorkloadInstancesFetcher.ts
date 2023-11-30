@@ -91,7 +91,7 @@ export const useWorkloadFilter = (
 
     if (customUIDsString) {
       const customUIDs: Array<string> = customUIDsString?.trim().split(',');
-
+      
       uuids.push(...customUIDs);
     }
     return {

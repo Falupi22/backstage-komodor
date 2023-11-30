@@ -94,8 +94,9 @@ export class KomodorWorker {
           API_QUERY_PARAMS_DEFAULT_VALUE,
       };
 
+      console.log("SHITIIIT:", queryParams.has(API_QUERY_PARAMS_WORKLOAD_UUID))
       if (queryParams.has(API_QUERY_PARAMS_WORKLOAD_UUID)) {
-        queryParams.append(API_QUERY_PARAMS_WORKLOAD_UUID, queryParams.get(API_QUERY_PARAMS_WORKLOAD_UUID) ?? '')
+        params[API_QUERY_PARAMS_WORKLOAD_UUID] = queryParams.get(API_QUERY_PARAMS_WORKLOAD_UUID) ?? ''
       }
 
       const { shouldFetch } = cacheOptions;
@@ -119,7 +120,6 @@ export class KomodorWorker {
           );
         }
       }
-      console.log("Reg: " + JSON.stringify(params))
       // Fetches the data right from Komodor or at least from the cache, after formatting it
       data =
         shouldFetch && existingData && existingData.length > 0
