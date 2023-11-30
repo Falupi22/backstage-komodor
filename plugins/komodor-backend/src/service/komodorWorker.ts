@@ -94,7 +94,6 @@ export class KomodorWorker {
           API_QUERY_PARAMS_DEFAULT_VALUE,
       };
 
-      console.log("SHITIIIT:", queryParams.has(API_QUERY_PARAMS_WORKLOAD_UUID))
       if (queryParams.has(API_QUERY_PARAMS_WORKLOAD_UUID)) {
         params[API_QUERY_PARAMS_WORKLOAD_UUID] = queryParams.get(API_QUERY_PARAMS_WORKLOAD_UUID) ?? ''
       }
@@ -137,7 +136,7 @@ export class KomodorWorker {
         // Cache cannot store items without pod UUID because it's the only way to get the workload.
         if (params.pod_uuid) {
           // There's only one workload with this UUID.
-          const item = this.cache.getWorkloadByUUID(params.pod_uuid);
+          const item = this.cache.getWorkloads(workload => workload.pod_uuid === params.pod_uuid).at(0);
 
           if (item) {
             item.clusterName = data[0].cluster_name;
@@ -147,35 +146,13 @@ export class KomodorWorker {
           } else {
             this.cache.setWorkload({
               uuid: params.pod_uuid,
+              pod_uuid: params.pod_uuid,
               name: params.workload_name,
               namespace: params.workload_namespace,
               clusterName: data[0].cluster_name,
               status: data[0].status,
               lastUpdateRequest: Date.now(),
             });
-
-            // In case where there is pod UUID, the data contains only one item.
-            const workload = data.at(0);
-            if (workload) {
-              const item = this.cache.getWorkloadByUUID(workload.workload_uuid);
-    
-              if (item) {
-                item.clusterName = workload.cluster_name;
-                item.status = workload.status;
-    
-                this.cache.setWorkload(item);
-              } else {
-                this.cache.setWorkload({
-                  uuid: workload.workload_uuid,
-                  pod_uuid: params.pod_uuid,
-                  name: params.workload_name,
-                  namespace: params.workload_namespace,
-                  clusterName: workload.cluster_name,
-                  status: workload.status,
-                  lastUpdateRequest: Date.now(),
-                });
-              }
-            };
           }
         }
       }
@@ -220,12 +197,6 @@ export class KomodorWorker {
             if (irrelevant) {
               this.cache.removeWorkload(workload.uuid);
             }
-
-            console.log("Upd:", {
-              workload_name: workload.name,
-              workload_namespace: workload.namespace,
-              pod_uuid: workload.pod_uuid
-            });
               const data: KomodorApiResponseInfo[] = await this.api.fetch({
                 workload_name: workload.name,
                 workload_namespace: workload.namespace,
