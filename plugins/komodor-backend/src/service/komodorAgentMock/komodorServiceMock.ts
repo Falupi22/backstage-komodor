@@ -23,6 +23,7 @@ const port = 7008;
 
 const cache = new Map();
 
+// Enter your own pods' UUIDs!
 cache.set('63ac5c15-3342-498d-a9e9-c2bb72577bbd', {
   workloadName: 'my_workload_name1A',
   workloadNamespace: 'my_workload_namespace1A',
