@@ -178,6 +178,10 @@ const serviceEntityPage = (
     <EntityLayout.Route path="/docs" title="Docs">
       {techdocsContent}
     </EntityLayout.Route>
+
+    <EntityLayout.Route path="/komodor" title="Komodor">
+      {komodorContent}
+    </EntityLayout.Route>
   </EntityLayout>
 );
 
