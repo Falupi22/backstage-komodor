@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { createRouter } from '@internal/plugin-komodor-backend';
+import { createRouter } from '@falupi22/plugin-komodor-backend';
 import { Router } from 'express';
 import { PluginEnvironment } from '../types';
 
