@@ -121,10 +121,10 @@ export const useWorkloadInstancesFetcher = (
     const workloads: Array<WorkloadInstanceInfo> = [];
     // Prevents a default filter request.
     if (
-      filter &&
-      filter.name !== API_QUERY_PARAM_DEFAULT_VALUE &&
+      filter && (filter.uuids.length > 0 || 
+      (filter.name !== API_QUERY_PARAM_DEFAULT_VALUE &&
       filter.namespace !== API_QUERY_PARAM_DEFAULT_VALUE
-    ) {
+  ))) {
       if (filter.uuids.length > 0) {
         for (const uuid of filter.uuids) {
           workloads.push(
@@ -141,8 +141,7 @@ export const useWorkloadInstancesFetcher = (
         workloads.push(
           ...(await api.getWorkloadInstances({
             workload_name: filter.name,
-            workload_namespace: filter.namespace,
-            pod_uuid: API_QUERY_PARAM_DEFAULT_VALUE,
+            workload_namespace: filter.namespace
           })),
         );
       }
